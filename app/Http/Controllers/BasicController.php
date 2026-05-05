@@ -22,6 +22,11 @@ class BasicController extends Controller
             $dishes->where('category_id', $request->category_id);
         }
 
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            $dishes->where('name','like', '%'. $searchTerm .'%');
+        }
+
         $dishes = $dishes->get();
 
         return view("static.menu", compact('dishes', 'category'));
